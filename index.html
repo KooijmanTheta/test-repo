@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theta Capital — Team</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+        }
+        header {
+            padding: 2rem 2rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        header h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+        main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 1rem;
+            margin-top: 2.5rem;
+        }
+        .section-title:first-child { margin-top: 0; }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .member {
+            background: #000;
+            padding: 1.2rem 1.4rem;
+            transition: background 0.2s;
+        }
+        .member:hover { background: rgba(255,255,255,0.04); }
+        .member-name {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .member-role {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.2rem;
+        }
+        footer {
+            padding: 2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.75rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Theta Capital</h1>
+        <p>Making blockchain investable since 2017</p>
+    </header>
+    <main>
+        <h2 class="section-title">Managing Partners</h2>
+        <div class="team-grid">
+            <div class="member">
+                <div class="member-name">Ruud Smets</div>
+                <div class="member-role">Managing Partner & CIO</div>
+            </div>
+            <div class="member">
+                <div class="member-name">John van Marle</div>
+                <div class="member-role">Managing Partner</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Marc de Kloe</div>
+                <div class="member-role">Managing Partner</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Investment & Portfolio</h2>
+        <div class="team-grid">
+            <div class="member">
+                <div class="member-name">Leopoldo Ochoa</div>
+                <div class="member-role">Portfolio Manager</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Thijs de Jongh</div>
+                <div class="member-role">Portfolio Manager</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Philipp Essle</div>
+                <div class="member-role">Investment Associate</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Research & Data</h2>
+        <div class="team-grid">
+            <div class="member">
+                <div class="member-name">Orphée de Bouard</div>
+                <div class="member-role">Blockchain Research Lead</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Jelmer Bos</div>
+                <div class="member-role">Data & AI Lead</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Lucas Kooijman</div>
+                <div class="member-role">Data Analyst</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Joseph Goldfinch</div>
+                <div class="member-role">Data Analyst</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Business Development & IR</h2>
+        <div class="team-grid">
+            <div class="member">
+                <div class="member-name">Jeroen M. Tielman</div>
+                <div class="member-role">Head of Institutional Relations</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Robbie Whitlock</div>
+                <div class="member-role">VP of Fundraising & BD</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Valerie Reinhold</div>
+                <div class="member-role">Head of Investor Relations</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Operations</h2>
+        <div class="team-grid">
+            <div class="member">
+                <div class="member-name">Fokko Hoeksma</div>
+                <div class="member-role">Head of Hedgefunds Operations</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Ters van der Merwe</div>
+                <div class="member-role">Senior Financial Controller</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Joël Paarwater</div>
+                <div class="member-role">CDD Analyst</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Communications & Marketing</h2>
+        <div class="team-grid">
+            <div class="member">
+                <div class="member-name">Olga Vazquez</div>
+                <div class="member-role">Head of Thought Leadership</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Bas van Honk</div>
+                <div class="member-role">Marketing & Design Lead</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Supervisory Board & Advisors</h2>
+        <div class="team-grid">
+            <div class="member">
+                <div class="member-name">Tijo van Marle</div>
+                <div class="member-role">Supervisory Board · Founder Theta</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Rob van den Bergh</div>
+                <div class="member-role">Supervisory Board · Ex-CEO VNU</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Erik Westerink</div>
+                <div class="member-role">Supervisory Board · Ex-CEO Parcom</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Volkert Doeksen</div>
+                <div class="member-role">TBV Advisor · Co-Founder Alpinvest</div>
+            </div>
+            <div class="member">
+                <div class="member-name">Rolly van Rappard</div>
+                <div class="member-role">Advisor & Shareholder · Co-Founder CVC Capital</div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        &copy; 2026 Theta Capital Management B.V. &middot; Amsterdam
+    </footer>
+</body>
+</html>
