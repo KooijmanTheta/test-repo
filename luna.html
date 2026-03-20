@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+        }
+        header h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: #f9a8d4;
+            text-shadow: 0 0 20px rgba(249, 168, 212, 0.4);
+            animation: glow 3s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(249, 168, 212, 0.4); }
+            50% { text-shadow: 0 0 40px rgba(249, 168, 212, 0.6), 0 0 60px rgba(249, 168, 212, 0.2); }
+        }
+        header p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+            margin-top: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .pixel-luna {
+            display: flex;
+            justify-content: center;
+            padding: 2rem 0;
+            position: relative;
+        }
+        .pixel-canvas {
+            image-rendering: pixelated;
+            width: 200px;
+            height: 240px;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 20px 40px rgba(249, 168, 212, 0.15));
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .hearts {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            font-size: 1rem;
+            animation: heartFloat 4s ease-in-out infinite;
+            opacity: 0;
+        }
+        @keyframes heartFloat {
+            0% { opacity: 0; transform: translateY(0) scale(0.5); }
+            30% { opacity: 0.8; }
+            100% { opacity: 0; transform: translateY(-80px) scale(1.2); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: rgba(249, 168, 212, 0.1);
+            border: 1px solid rgba(249, 168, 212, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .stat-card {
+            background: #0a0a1a;
+            padding: 1.2rem;
+            text-align: center;
+            transition: background 0.3s;
+        }
+        .stat-card:hover { background: rgba(249, 168, 212, 0.03); }
+        .stat-label {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            color: rgba(249, 168, 212, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            color: #f9a8d4;
+        }
+        .stat-bar {
+            margin-top: 0.5rem;
+            height: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .stat-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #f9a8d4, #c084fc);
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bio {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(249, 168, 212, 0.08);
+            border-radius: 12px;
+            background: rgba(249, 168, 212, 0.02);
+        }
+        .bio-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.55rem;
+            color: rgba(249, 168, 212, 0.5);
+            margin-bottom: 0.75rem;
+        }
+        .bio-text {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .mood {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .mood-label {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            color: rgba(249, 168, 212, 0.4);
+        }
+        .mood-emoji {
+            font-size: 2rem;
+            margin-top: 0.5rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .message-box {
+            margin-top: 2rem;
+            padding: 1.2rem;
+            border: 1px dashed rgba(249, 168, 212, 0.15);
+            border-radius: 12px;
+            text-align: center;
+        }
+        .message-box p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+            font-style: italic;
+        }
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid rgba(249, 168, 212, 0.5);
+            animation: typing 3.5s steps(40, end), blink 0.75s step-end infinite;
+            max-width: fit-content;
+            margin: 0 auto;
+        }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink { from, to { border-color: transparent; } 50% { border-color: rgba(249, 168, 212, 0.5); } }
+
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.1);
+            font-size: 0.65rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <header>
+            <h1>Luna</h1>
+            <p>pixel girlfriend dashboard v1.0</p>
+        </header>
+
+        <div class="pixel-luna">
+            <div class="hearts" id="hearts"></div>
+            <canvas class="pixel-canvas" id="luna" width="32" height="40"></canvas>
+        </div>
+
+        <div class="mood">
+            <div class="mood-label">Current Mood</div>
+            <div class="mood-emoji" id="mood">😍</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Love</div>
+                <div class="stat-value">∞</div>
+                <div class="stat-bar"><div class="stat-bar-fill" style="width: 100%"></div></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Brains</div>
+                <div class="stat-value">99</div>
+                <div class="stat-bar"><div class="stat-bar-fill" style="width: 99%"></div></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Beauty</div>
+                <div class="stat-value">100</div>
+                <div class="stat-bar"><div class="stat-bar-fill" style="width: 100%"></div></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Power</div>
+                <div class="stat-value">Bain</div>
+                <div class="stat-bar"><div class="stat-bar-fill" style="width: 95%"></div></div>
+            </div>
+        </div>
+
+        <div class="bio">
+            <div class="bio-title">// Profile</div>
+            <div class="bio-text">
+                <strong style="color: #f9a8d4;">Luna van Impe</strong><br>
+                Associate @ Bain & Company<br>
+                Status: Taken by Lucas 💕
+            </div>
+        </div>
+
+        <div class="message-box">
+            <p class="typewriter">Luna says: "Go to sleep Lucas, it's late" 💤</p>
+        </div>
+    </div>
+
+    <footer>
+        built with love by Lucas's Claude God
+    </footer>
+
+    <script>
+        // Stars
+        const starsEl = document.getElementById('stars');
+        for (let i = 0; i < 80; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', (2 + Math.random() * 4) + 's');
+            star.style.animationDelay = Math.random() * 4 + 's';
+            star.style.width = star.style.height = (1 + Math.random() * 2) + 'px';
+            starsEl.appendChild(star);
+        }
+
+        // Floating hearts
+        const heartsEl = document.getElementById('hearts');
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = ['❤️', '💖', '💕', '✨', '💗'][Math.floor(Math.random() * 5)];
+            heart.style.left = (30 + Math.random() * 40) + '%';
+            heart.style.top = (40 + Math.random() * 30) + '%';
+            heart.style.animationDelay = '0s';
+            heart.style.animationDuration = (3 + Math.random() * 2) + 's';
+            heartsEl.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }, 1500);
+
+        // Mood rotation
+        const moods = ['😍', '🥰', '💅', '✨', '👩‍💼', '💪', '😘'];
+        let moodIdx = 0;
+        setInterval(() => {
+            moodIdx = (moodIdx + 1) % moods.length;
+            document.getElementById('mood').textContent = moods[moodIdx];
+        }, 3000);
+
+        // Pixel Luna
+        const canvas = document.getElementById('luna');
+        const ctx = canvas.getContext('2d');
+        canvas.style.width = '200px';
+        canvas.style.height = '250px';
+
+        const P = '#f9a8d4', D = '#1a1008', S = '#f0dbc5', W = '#fff', B = '#0a0a1a';
+        const H = '#2d1810', E = '#333', BL = '#1a2332', R = '#e53e3e';
+
+        // 32x40 pixel art
+        const pixels = [
+            // Row 0-3: Hair top
+            '................................',
+            '..........HHHHHHHHHHHH..........',
+            '........HHHHHHHHHHHHHHHH........',
+            '.......HHHHHHHHHHHHHHHHHH.......',
+            // Row 4-7: Hair + forehead
+            '......HHHHHHHHHHHHHHHHHHHH......',
+            '.....HHHHHHHHHHHHHHHHHHHHH......',
+            '.....HHHHHHHHHHHHHHHHHHHHH......',
+            '....HHHHHSSSSSSSSSSSHHHHHH......',
+            // Row 8-11: Face
+            '....HHHHSSSSSSSSSSSSHHHHH.......',
+            '....HHHSSSSSSSSSSSSSHHHHH.......',
+            '....HHHSSSSSSSSSSSSSSHHHH.......',
+            '....HHSSSSESSSSSESSSSHHHH.......',
+            // Row 12-15: Face + smile
+            '....HHSSSSSSSSSSSSSSSHHHH.......',
+            '....HHSSSSSSRRRSSSSSSHHHH.......',
+            '....HHSSSSSSSSSSSSSSSHHH........',
+            '....HHSSSSSSSMSSSSSSSHH.........',
+            // Row 16-19: Chin + neck
+            '.....HSSSSSSSSSSSSSSSH..........',
+            '.....HHSSSSSSSSSSSSHH...........',
+            '......HHSSSSSSSSSHH.............',
+            '.......HHSSSSSSHH...............',
+            // Row 20-23: Shoulders + top
+            '........SSSSSSSS................',
+            '.......SSSSSSSSSS...............',
+            '....BBBBBBBBBBBBBBBBB...........',
+            '...BBBBBBBBBBBBBBBBBBB..........',
+            // Row 24-27: Body
+            '..BBBBBBBBBBBBBBBBBBBBB.........',
+            '..BBBBBWWWWBBBBBBBBBBBBB........',
+            '..BBBBBWWWWBBBBBBBBBBBB.........',
+            '..BBBBBBBBBBBBBBBBBBBBB.........',
+            // Row 28-31: Body lower
+            '..BBBBBBBBBBBBBBBBBBBBB.........',
+            '...BBBBBBBBBBBBBBBBBBB..........',
+            '...BBBBBBBBBBBBBBBBBBB..........',
+            '....BBBBBBBBBBBBBBBBB...........',
+            // Row 32-35: Skirt
+            '....PPPPPPPPPPPPPPPPP...........',
+            '...PPPPPPPPPPPPPPPPPPP..........',
+            '..PPPPPPPPPPPPPPPPPPPPP.........',
+            '..PPPPPPPPPPPPPPPPPPPPP.........',
+            // Row 36-39: Legs + shoes
+            '.........SSSSSSSS...............',
+            '.........SSSSSSSS...............',
+            '........DDDDDDDDDD.............',
+            '........DDDDDDDDDD.............',
+        ];
+
+        const colorMap = {
+            'H': '#2d1810', 'S': '#f0dbc5', 'E': '#333333',
+            'P': '#f9a8d4', 'D': '#1a1008', 'W': '#ffffff',
+            'B': '#1a2332', 'R': '#e88080', 'M': '#d4757a',
+            '.': null
+        };
+
+        for (let y = 0; y < 40; y++) {
+            for (let x = 0; x < 32; x++) {
+                const c = pixels[y]?.[x];
+                if (c && colorMap[c]) {
+                    ctx.fillStyle = colorMap[c];
+                    ctx.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
