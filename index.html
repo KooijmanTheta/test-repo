@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #050505;
@@ -16,8 +15,6 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-
-        /* Subtle grain texture */
         body::before {
             content: '';
             position: fixed;
@@ -26,251 +23,123 @@
             pointer-events: none;
             z-index: 0;
         }
-
-        /* Gradient orb */
         .orb {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
+            position: fixed; width: 600px; height: 600px; border-radius: 50%;
             background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
-            top: -200px;
-            right: -200px;
-            pointer-events: none;
-            z-index: 0;
+            top: -200px; right: -200px; pointer-events: none; z-index: 0;
             animation: orbFloat 20s ease-in-out infinite;
         }
         .orb-2 {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
+            position: fixed; width: 500px; height: 500px; border-radius: 50%;
             background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
-            bottom: -150px;
-            left: -150px;
-            pointer-events: none;
-            z-index: 0;
+            bottom: -150px; left: -150px; pointer-events: none; z-index: 0;
             animation: orbFloat2 25s ease-in-out infinite;
         }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-60px, 80px); }
-        }
-        @keyframes orbFloat2 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(50px, -60px); }
-        }
-
-        /* Fade-in on scroll */
+        @keyframes orbFloat { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-60px,80px); } }
+        @keyframes orbFloat2 { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(50px,-60px); } }
         .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
         }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
         header {
-            padding: 6rem 2rem 4rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
+            padding: 6rem 2rem 4rem; text-align: center; position: relative; z-index: 1;
         }
         header h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
+            font-size: 3.5rem; font-weight: 700; letter-spacing: -0.03em;
             background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) forwards;
         }
         header p {
-            color: rgba(255,255,255,0.35);
-            font-size: 1rem;
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+            color: rgba(255,255,255,0.35); font-size: 1rem; font-weight: 300; letter-spacing: 0.05em;
+            animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;
         }
         header .subtitle {
-            display: inline-block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            color: rgba(255,255,255,0.25);
-            margin-top: 2.5rem;
-            padding: 0.5rem 1.5rem;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 100px;
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+            display: inline-block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3em;
+            color: rgba(255,255,255,0.25); margin-top: 2.5rem; padding: 0.5rem 1.5rem;
+            border: 1px solid rgba(255,255,255,0.08); border-radius: 100px;
+            animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.3s both;
         }
         .header-line {
-            width: 40px;
-            height: 1px;
+            width: 40px; height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            margin: 2rem auto 0;
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+            margin: 2rem auto 0; animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.45s both;
         }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        main {
-            padding: 2rem 2rem 4rem;
-            max-width: 1100px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        main { padding: 2rem 2rem 4rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
         .section-title {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            color: rgba(255,255,255,0.25);
-            margin-bottom: 0.5rem;
-            margin-top: 5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.25em;
+            color: rgba(255,255,255,0.25); margin-bottom: 0.5rem; margin-top: 5rem;
+            display: flex; align-items: center; gap: 1rem;
         }
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.08), transparent);
-        }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.08), transparent); }
         .section-title:first-child { margin-top: 1rem; }
-
         .member {
-            padding: 2.5rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            gap: 2.5rem;
-            align-items: start;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
+            padding: 2.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: grid; grid-template-columns: 90px 220px 1fr; gap: 1.5rem; align-items: start;
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1); position: relative;
         }
         .member::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            right: -2rem;
-            top: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
-            border-radius: 12px;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
+            content: ''; position: absolute; left: -2rem; right: -2rem; top: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(99,102,241,0.03) 0%, transparent 50%);
+            border-radius: 12px; opacity: 0; transition: opacity 0.4s ease; pointer-events: none;
         }
         .member:hover::before { opacity: 1; }
         .member:last-child { border-bottom: none; }
 
+        .avatar {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease;
+            flex-shrink: 0;
+        }
+        .member:hover .avatar {
+            transform: scale(1.08);
+            border-color: rgba(165,180,252,0.3);
+        }
+        .avatar svg { width: 100%; height: 100%; }
+
         .member-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            transition: color 0.3s ease;
+            font-size: 1.3rem; font-weight: 600; letter-spacing: -0.02em; transition: color 0.3s ease;
         }
         .member:hover .member-name {
             background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-        .member-role {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.35);
-            margin-top: 0.4rem;
-            font-weight: 400;
-            letter-spacing: 0.02em;
-        }
-        .member-bio {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.55);
-            line-height: 1.75;
-            font-weight: 300;
-        }
+        .member-role { font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 0.4rem; font-weight: 400; letter-spacing: 0.02em; }
+        .member-bio { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.75; font-weight: 300; }
         .member-details {
-            margin-top: 0.75rem;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.2);
-            letter-spacing: 0.02em;
-            padding-top: 0.75rem;
-            border-top: 1px solid rgba(255,255,255,0.04);
+            margin-top: 0.75rem; font-size: 0.75rem; color: rgba(255,255,255,0.2);
+            letter-spacing: 0.02em; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.04);
         }
-
-        /* Stagger animations per section */
-        .member:nth-child(2) { transition-delay: 0.05s; }
-        .member:nth-child(3) { transition-delay: 0.1s; }
-        .member:nth-child(4) { transition-delay: 0.15s; }
-        .member:nth-child(5) { transition-delay: 0.2s; }
-
         footer {
-            padding: 3rem 2rem;
-            text-align: center;
-            color: rgba(255,255,255,0.15);
-            font-size: 0.7rem;
-            letter-spacing: 0.05em;
-            position: relative;
-            z-index: 1;
+            padding: 3rem 2rem; text-align: center; color: rgba(255,255,255,0.15);
+            font-size: 0.7rem; letter-spacing: 0.05em; position: relative; z-index: 1;
         }
         footer::before {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 1px;
+            content: ''; display: block; width: 40px; height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
             margin: 0 auto 2rem;
         }
-
-        /* Stats bar */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            padding: 3rem 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        .stat {
-            text-align: center;
-            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
+        .stats { display: flex; justify-content: center; gap: 4rem; padding: 3rem 2rem; position: relative; z-index: 1; }
+        .stat { text-align: center; animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) both; }
         .stat:nth-child(1) { animation-delay: 0.5s; }
         .stat:nth-child(2) { animation-delay: 0.6s; }
         .stat:nth-child(3) { animation-delay: 0.7s; }
         .stat:nth-child(4) { animation-delay: 0.8s; }
         .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
+            font-size: 2rem; font-weight: 700; letter-spacing: -0.03em;
             background: linear-gradient(135deg, #fff, rgba(255,255,255,0.5));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-        .stat-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: rgba(255,255,255,0.25);
-            margin-top: 0.3rem;
-        }
-
+        .stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.25); margin-top: 0.3rem; }
         @media (max-width: 700px) {
-            .member {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
+            .member { grid-template-columns: 70px 1fr; gap: 1rem; }
+            .member-bio { grid-column: 1 / -1; }
+            .avatar { width: 60px; height: 60px; }
             header { padding: 4rem 1.5rem 3rem; }
             header h1 { font-size: 2.2rem; }
             .stats { gap: 2rem; flex-wrap: wrap; }
@@ -291,28 +160,30 @@
     </header>
 
     <div class="stats">
-        <div class="stat">
-            <div class="stat-value">2001</div>
-            <div class="stat-label">Founded</div>
-        </div>
-        <div class="stat">
-            <div class="stat-value">$1.5B+</div>
-            <div class="stat-label">AUM</div>
-        </div>
-        <div class="stat">
-            <div class="stat-value">6</div>
-            <div class="stat-label">Fund Vintages</div>
-        </div>
-        <div class="stat">
-            <div class="stat-value">50+</div>
-            <div class="stat-label">Venture Funds</div>
-        </div>
+        <div class="stat"><div class="stat-value">2001</div><div class="stat-label">Founded</div></div>
+        <div class="stat"><div class="stat-value">$1.5B+</div><div class="stat-label">AUM</div></div>
+        <div class="stat"><div class="stat-value">6</div><div class="stat-label">Fund Vintages</div></div>
+        <div class="stat"><div class="stat-value">50+</div><div class="stat-label">Venture Funds</div></div>
     </div>
 
     <main>
         <h2 class="section-title fade-in">Managing Partners</h2>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e8d5c4"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1e293b"/>
+                    <path d="M26 28c0-8 6-16 14-16s14 8 14 16" fill="#3b2f1e" stroke="none"/>
+                    <path d="M26 28c-2 0-3-2-2-4 1-3 4-5 4-5" fill="#3b2f1e"/>
+                    <path d="M54 28c2 0 3-2 2-4-1-3-4-5-4-5" fill="#3b2f1e"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Ruud Smets</div>
                 <div class="member-role">Managing Partner & CIO</div>
@@ -324,6 +195,19 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#f0dcc8"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1a1a2e"/>
+                    <path d="M24 26c2-10 8-15 16-15s14 5 16 15c0 0-4-6-16-6s-16 6-16 6z" fill="#5c4a3a"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                    <line x1="37" y1="57.5" x2="43" y2="57.5" stroke="#1a1a2e" stroke-width="0.5"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">John van Marle</div>
                 <div class="member-role">Managing Partner</div>
@@ -335,18 +219,48 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e4cdb5"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1c2333"/>
+                    <path d="M25 30c0-12 7-18 15-18s15 6 15 18" fill="#2a2015" stroke="none"/>
+                    <path d="M25 30h30" stroke="#2a2015" stroke-width="3"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="30" y="32" width="8" height="5" rx="2.5" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+                    <rect x="42" y="32" width="8" height="5" rx="2.5" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+                    <line x1="38" y1="34.5" x2="42" y2="34.5" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Marc de Kloe</div>
                 <div class="member-role">Managing Partner</div>
             </div>
             <div class="member-bio">
-                Joined Theta in 2018 with an extensive investment background across alternatives. Former Head of Alternatives and Funds for ABN AMRO Private Banking, and more recently COO of Adamas Asset Management, a private credit manager based in Hong Kong. Deep expertise in hedge funds, private credit, and private equity.
+                Joined Theta in 2018 with an extensive investment background across alternatives. Former Head of Alternatives and Funds for ABN AMRO Private Banking, and more recently COO of Adamas Asset Management, a private credit manager based in Hong Kong.
             </div>
         </div>
 
         <h2 class="section-title fade-in">Investment & Portfolio</h2>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#c8a882"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1a2436"/>
+                    <path d="M26 30c0-10 6-17 14-17s14 7 14 17" fill="#1a1008"/>
+                    <path d="M26 30c-1 4-1 8 0 10" stroke="#1a1008" stroke-width="2" fill="none"/>
+                    <path d="M54 30c1 4 1 8 0 10" stroke="#1a1008" stroke-width="2" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#222"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#222"/>
+                    <path d="M36 42c2 2 6 2 8 0" stroke="#222" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Leopoldo Ochoa</div>
                 <div class="member-role">Portfolio Manager</div>
@@ -358,6 +272,20 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#f2dcc6"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#192231"/>
+                    <path d="M27 28c1-9 6-14 13-14s12 5 13 14" fill="#c9a44a"/>
+                    <path d="M27 28l-2 4" stroke="#c9a44a" stroke-width="2"/>
+                    <path d="M53 28l2 4" stroke="#c9a44a" stroke-width="2"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Thijs de Jongh</div>
                 <div class="member-role">Portfolio Manager</div>
@@ -369,6 +297,20 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#ebd4be"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1e2636"/>
+                    <path d="M26 26c2-8 7-13 14-13s12 5 14 13" fill="#6b4c2a"/>
+                    <path d="M26 26c0 2 0 6 1 8" stroke="#6b4c2a" stroke-width="2" fill="none"/>
+                    <path d="M54 26c0 2 0 6-1 8" stroke="#6b4c2a" stroke-width="2" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M38 42c1 1 3 1 4 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Philipp Essle</div>
                 <div class="member-role">Investment Associate</div>
@@ -381,6 +323,21 @@
         <h2 class="section-title fade-in">Research & Data</h2>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e8d0b8"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1f2937"/>
+                    <path d="M25 32c0-12 7-20 15-20s15 8 15 20" fill="#2d1f10"/>
+                    <path d="M25 32c-2 2-3 6-2 10" stroke="#2d1f10" stroke-width="3" fill="none"/>
+                    <path d="M55 32c2 2 3 6 2 10" stroke="#2d1f10" stroke-width="3" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 43c1.5 1 4.5 1 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <path d="M33 40c0 0 1 5 7 5s7-5 7-5" fill="none" stroke="#7c6850" stroke-width="0.8"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Orphée de Bouard</div>
                 <div class="member-role">Blockchain Research Lead</div>
@@ -391,6 +348,18 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#f0dbc5"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1a2332"/>
+                    <path d="M28 28c1-8 5-13 12-13s11 5 12 13" fill="#8b6914"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Jelmer Bos</div>
                 <div class="member-role">Data & AI Lead</div>
@@ -401,6 +370,20 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#f2dcc6"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#0f172a"/>
+                    <path d="M27 30c1-10 6-16 13-16s12 6 13 16" fill="#3d2b1a"/>
+                    <path d="M27 30l-1 6" stroke="#3d2b1a" stroke-width="2" fill="none"/>
+                    <path d="M53 30l1 6" stroke="#3d2b1a" stroke-width="2" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M36 42c2 2 6 2 8 0" stroke="#333" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#6366f1" opacity="0.8"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Lucas Kooijman</div>
                 <div class="member-role">Data Analyst</div>
@@ -411,6 +394,20 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e6c8a0"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1e2530"/>
+                    <path d="M26 28c2-10 7-15 14-15s12 5 14 15" fill="#c4952e"/>
+                    <path d="M26 28c0 3-1 7 0 9" stroke="#c4952e" stroke-width="2" fill="none"/>
+                    <path d="M54 28c0 3 1 7 0 9" stroke="#c4952e" stroke-width="2" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Joseph Goldfinch</div>
                 <div class="member-role">Data Analyst</div>
@@ -423,16 +420,43 @@
         <h2 class="section-title fade-in">Business Development & Investor Relations</h2>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e8d0b8"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#111827"/>
+                    <path d="M28 32c0-10 5-16 12-16s12 6 12 16" fill="#9ca3af"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                    <line x1="37" y1="57.5" x2="43" y2="57.5" stroke="#111827" stroke-width="0.5"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Jeroen M. Tielman</div>
                 <div class="member-role">Head of Institutional Relations</div>
             </div>
             <div class="member-bio">
-                Joined Theta in January 2025 with over 35 years of experience in alternative asset management. Former Founder and CEO of IMQubator and FundPartners, and spent 14 years at ABN AMRO including as Global Head of Product Development. Has known Theta CIO Ruud Smets since hiring him at FundPartners in 2001.
+                Joined Theta in January 2025 with over 35 years of experience in alternative asset management. Former Founder and CEO of IMQubator and FundPartners, and spent 14 years at ABN AMRO including as Global Head of Product Development.
             </div>
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#f0dbc5"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1a2332"/>
+                    <path d="M27 26c2-8 6-13 13-13s11 5 13 13" fill="#4a3520"/>
+                    <path d="M27 26c-1 3-1 8 0 12" stroke="#4a3520" stroke-width="2" fill="none"/>
+                    <path d="M53 26c1 3 1 8 0 12" stroke="#4a3520" stroke-width="2" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M38 42c1 1 3 1 4 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Robbie Whitlock</div>
                 <div class="member-role">VP of Fundraising & BD</div>
@@ -443,6 +467,20 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#f2dcc6"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1c1f2e"/>
+                    <path d="M24 34c0-14 8-22 16-22s16 8 16 22" fill="#5c3a1e"/>
+                    <path d="M24 34c-1 4-1 10 2 14" stroke="#5c3a1e" stroke-width="2" fill="none"/>
+                    <path d="M56 34c1 4 1 10-2 14" stroke="#5c3a1e" stroke-width="2" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Valerie Reinhold</div>
                 <div class="member-role">Head of Investor Relations</div>
@@ -455,6 +493,18 @@
         <h2 class="section-title fade-in">Operations</h2>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#ebd4be"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1e293b"/>
+                    <path d="M29 30c1-8 5-13 11-13s10 5 11 13" fill="#7a5c3a"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Fokko Hoeksma</div>
                 <div class="member-role">Head of Hedgefunds Operations</div>
@@ -465,6 +515,19 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#d4a574"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1a2436"/>
+                    <path d="M28 28c2-8 6-14 12-14s10 6 12 14" fill="#1a1008"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#222"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#222"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#222" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <path d="M32 44c0 0 2 4 8 4s8-4 8-4" fill="none" stroke="#8b6850" stroke-width="0.7"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Ters van der Merwe</div>
                 <div class="member-role">Senior Financial Controller</div>
@@ -475,6 +538,19 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#f0dbc5"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1e2636"/>
+                    <path d="M26 26c2-8 7-13 14-13s12 5 14 13" fill="#2d1f10"/>
+                    <path d="M40 13c-3 0-6 2-8 5 4-2 6-2 8-2s4 0 8 2c-2-3-5-5-8-5z" fill="#2d1f10"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M38 42c1 1 3 1 4 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Joël Paarwater</div>
                 <div class="member-role">CDD Analyst</div>
@@ -487,6 +563,22 @@
         <h2 class="section-title fade-in">Communications & Marketing</h2>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e8d0b8"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#2d1b2e"/>
+                    <path d="M22 36c0-16 9-24 18-24s18 8 18 24" fill="#1a0a05"/>
+                    <path d="M22 36c-1 6 0 14 4 18" stroke="#1a0a05" stroke-width="2.5" fill="none"/>
+                    <path d="M58 36c1 6 0 14-4 18" stroke="#1a0a05" stroke-width="2.5" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <circle cx="36" cy="43" r="3" fill="rgba(220,120,120,0.15)"/>
+                    <circle cx="44" cy="43" r="3" fill="rgba(220,120,120,0.15)"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Olga Vazquez</div>
                 <div class="member-role">Head of Thought Leadership</div>
@@ -498,6 +590,20 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#ebd4be"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1a1a2e"/>
+                    <path d="M28 28c1-8 5-14 12-14s11 6 12 14" fill="#5c3a1e"/>
+                    <path d="M28 28c-2 2-2 6-1 10" stroke="#5c3a1e" stroke-width="2" fill="none"/>
+                    <path d="M52 28c2 2 2 6 1 10" stroke="#5c3a1e" stroke-width="2" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M36 42c2 2 6 2 8 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Bas van Honk</div>
                 <div class="member-role">Marketing & Design Lead</div>
@@ -510,6 +616,19 @@
         <h2 class="section-title fade-in">Supervisory Board & Advisors</h2>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e8d0b8"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#0f1520"/>
+                    <path d="M29 30c1-8 5-14 11-14s10 6 11 14" fill="#b0b0b0"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                    <line x1="37" y1="57.5" x2="43" y2="57.5" stroke="#0f1520" stroke-width="0.5"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Tijo van Marle</div>
                 <div class="member-role">Supervisory Board · Founder</div>
@@ -520,16 +639,45 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e4cdb5"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#111827"/>
+                    <path d="M30 30c0-8 4-13 10-13s10 5 10 13" fill="#c0c0c0"/>
+                    <rect x="30" y="32" width="8" height="5" rx="2.5" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+                    <rect x="42" y="32" width="8" height="5" rx="2.5" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+                    <line x1="38" y1="34.5" x2="42" y2="34.5" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Rob van den Bergh</div>
                 <div class="member-role">Supervisory Board · Ex-CEO VNU</div>
             </div>
             <div class="member-bio">
-                Veteran media executive who transformed VNU from a classical publisher into an international information and media concern. Career spanning publisher of Intermediair, director of VNU Business Publications, and chairman of VNU Magazine Group before becoming CEO in 2000. Later served on Ahold Supervisory Board.
+                Veteran media executive who transformed VNU from a classical publisher into an international information and media concern. Career spanning publisher of Intermediair, director of VNU Business Publications, and chairman of VNU Magazine Group before becoming CEO in 2000.
             </div>
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e8d0b8"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#1a1a2e"/>
+                    <path d="M28 28c2-8 6-14 12-14s10 6 12 14" fill="#8a8a8a"/>
+                    <path d="M28 28l-2 6" stroke="#8a8a8a" stroke-width="2"/>
+                    <path d="M52 28l2 6" stroke="#8a8a8a" stroke-width="2"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Erik Westerink</div>
                 <div class="member-role">Supervisory Board · Ex-CEO Parcom</div>
@@ -541,23 +689,51 @@
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#ebd4be"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#111827"/>
+                    <path d="M27 26c2-8 6-14 13-14s11 6 13 14" fill="#a0a0a0"/>
+                    <path d="M27 26c-1 3-1 8 0 12" stroke="#a0a0a0" stroke-width="2" fill="none"/>
+                    <path d="M53 26c1 3 1 8 0 12" stroke="#a0a0a0" stroke-width="2" fill="none"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M37 42c1.5 1.5 4.5 1.5 6 0" stroke="#333" stroke-width="1" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                    <line x1="37" y1="57.5" x2="43" y2="57.5" stroke="#111827" stroke-width="0.5"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Volkert Doeksen</div>
                 <div class="member-role">TBV Advisor · Co-Founder AlpInvest</div>
             </div>
             <div class="member-bio">
-                Co-founded AlpInvest Partners in 1999, growing it into one of the world's largest private equity investment managers with €40B+ AUM. Previously managed $3B+ in private equity at Dresdner Kleinwort Benson. Started career at Morgan Stanley in London (1987).
+                Co-founded AlpInvest Partners in 1999, growing it into one of the world's largest private equity investment managers with €40B+ AUM. Previously managed $3B+ in private equity at Dresdner Kleinwort Benson.
                 <div class="member-details">LL.M. · Leiden Law School</div>
             </div>
         </div>
 
         <div class="member fade-in">
+            <div class="avatar">
+                <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="40" fill="#111"/>
+                    <ellipse cx="40" cy="36" rx="14" ry="15" fill="#e4cdb5"/>
+                    <ellipse cx="40" cy="75" rx="22" ry="18" fill="#0f1520"/>
+                    <path d="M28 28c2-8 6-14 12-14s10 6 12 14" fill="#b8b8b8"/>
+                    <circle cx="35" cy="35" r="1.5" fill="#333"/>
+                    <circle cx="45" cy="35" r="1.5" fill="#333"/>
+                    <path d="M36 42c2 2 6 2 8 0" stroke="#333" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+                    <rect x="34" y="56" width="12" height="3" rx="1.5" fill="#fff" opacity="0.9"/>
+                    <line x1="37" y1="57.5" x2="43" y2="57.5" stroke="#0f1520" stroke-width="0.5"/>
+                </svg>
+            </div>
             <div class="member-info">
                 <div class="member-name">Rolly van Rappard</div>
                 <div class="member-role">Advisor & Shareholder · Co-Founder CVC Capital</div>
             </div>
             <div class="member-bio">
-                Co-founded CVC Capital Partners in 1993 when it spun off from Citicorp Venture Capital. Served as Managing Partner for nearly 15 years before becoming Co-Chairman in 2013. CVC became one of the world's largest private equity firms, IPO'ing on Euronext Amsterdam in 2024.
+                Co-founded CVC Capital Partners in 1993 when it spun off from Citicorp Venture Capital. Served as Managing Partner for nearly 15 years before becoming Co-Chairman in 2013. CVC IPO'd on Euronext Amsterdam in 2024.
                 <div class="member-details">MA Economics · Columbia University · LL.M. · Utrecht University</div>
             </div>
         </div>
@@ -578,7 +754,6 @@
                 }
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     </script>
 </body>
