@@ -7,106 +7,312 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #000;
+            background: #050505;
             color: #fff;
             min-height: 100vh;
             line-height: 1.6;
+            overflow-x: hidden;
         }
+
+        /* Subtle grain texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Gradient orb */
+        .orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        .orb-2 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat2 25s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-60px, 80px); }
+        }
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, -60px); }
+        }
+
+        /* Fade-in on scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         header {
-            padding: 4rem 2rem 3rem;
+            padding: 6rem 2rem 4rem;
             text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            z-index: 1;
         }
         header h1 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         header p {
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.35);
             font-size: 1rem;
             font-weight: 300;
+            letter-spacing: 0.05em;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
         }
         header .subtitle {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.6);
-            margin-top: 1.5rem;
-            font-weight: 400;
-        }
-        main { padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; }
-        .section-title {
-            font-size: 0.7rem;
+            display: inline-block;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: rgba(255,255,255,0.35);
-            margin-bottom: 1.5rem;
-            margin-top: 4rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            letter-spacing: 0.3em;
+            color: rgba(255,255,255,0.25);
+            margin-top: 2.5rem;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 100px;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
         }
-        .section-title:first-child { margin-top: 0; }
+        .header-line {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            margin: 2rem auto 0;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        main {
+            padding: 2rem 2rem 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: rgba(255,255,255,0.25);
+            margin-bottom: 0.5rem;
+            margin-top: 5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.08), transparent);
+        }
+        .section-title:first-child { margin-top: 1rem; }
+
         .member {
-            padding: 2rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 2.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 2rem;
+            grid-template-columns: 260px 1fr;
+            gap: 2.5rem;
             align-items: start;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
+        .member::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            right: -2rem;
+            top: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .member:hover::before { opacity: 1; }
         .member:last-child { border-bottom: none; }
-        .member-info { }
+
         .member-name {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
+            transition: color 0.3s ease;
+        }
+        .member:hover .member-name {
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .member-role {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.45);
-            margin-top: 0.3rem;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.35);
+            margin-top: 0.4rem;
             font-weight: 400;
+            letter-spacing: 0.02em;
         }
         .member-bio {
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.6);
-            line-height: 1.7;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.75;
             font-weight: 300;
         }
         .member-details {
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.3);
+            margin-top: 0.75rem;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 0.02em;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.04);
         }
+
+        /* Stagger animations per section */
+        .member:nth-child(2) { transition-delay: 0.05s; }
+        .member:nth-child(3) { transition-delay: 0.1s; }
+        .member:nth-child(4) { transition-delay: 0.15s; }
+        .member:nth-child(5) { transition-delay: 0.2s; }
+
         footer {
             padding: 3rem 2rem;
             text-align: center;
-            color: rgba(255,255,255,0.2);
-            font-size: 0.75rem;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            margin-top: 2rem;
+            color: rgba(255,255,255,0.15);
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            position: relative;
+            z-index: 1;
         }
+        footer::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            margin: 0 auto 2rem;
+        }
+
+        /* Stats bar */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        .stat {
+            text-align: center;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .stat:nth-child(1) { animation-delay: 0.5s; }
+        .stat:nth-child(2) { animation-delay: 0.6s; }
+        .stat:nth-child(3) { animation-delay: 0.7s; }
+        .stat:nth-child(4) { animation-delay: 0.8s; }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.25);
+            margin-top: 0.3rem;
+        }
+
         @media (max-width: 700px) {
             .member {
                 grid-template-columns: 1fr;
                 gap: 0.75rem;
             }
-            header h1 { font-size: 1.8rem; }
+            header { padding: 4rem 1.5rem 3rem; }
+            header h1 { font-size: 2.2rem; }
+            .stats { gap: 2rem; flex-wrap: wrap; }
+            .stat-value { font-size: 1.5rem; }
+            main { padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
+    <div class="orb"></div>
+    <div class="orb-2"></div>
+
     <header>
         <h1>Theta Capital</h1>
         <p>Making blockchain investable since 2017</p>
-        <div class="subtitle">Our Team</div>
+        <div class="subtitle">The Team</div>
+        <div class="header-line"></div>
     </header>
-    <main>
-        <h2 class="section-title">Managing Partners</h2>
 
-        <div class="member">
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value">2001</div>
+            <div class="stat-label">Founded</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">$1.5B+</div>
+            <div class="stat-label">AUM</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">6</div>
+            <div class="stat-label">Fund Vintages</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">50+</div>
+            <div class="stat-label">Venture Funds</div>
+        </div>
+    </div>
+
+    <main>
+        <h2 class="section-title fade-in">Managing Partners</h2>
+
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Ruud Smets</div>
                 <div class="member-role">Managing Partner & CIO</div>
@@ -117,7 +323,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">John van Marle</div>
                 <div class="member-role">Managing Partner</div>
@@ -128,7 +334,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Marc de Kloe</div>
                 <div class="member-role">Managing Partner</div>
@@ -138,9 +344,9 @@
             </div>
         </div>
 
-        <h2 class="section-title">Investment & Portfolio</h2>
+        <h2 class="section-title fade-in">Investment & Portfolio</h2>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Leopoldo Ochoa</div>
                 <div class="member-role">Portfolio Manager</div>
@@ -151,7 +357,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Thijs de Jongh</div>
                 <div class="member-role">Portfolio Manager</div>
@@ -162,7 +368,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Philipp Essle</div>
                 <div class="member-role">Investment Associate</div>
@@ -172,9 +378,9 @@
             </div>
         </div>
 
-        <h2 class="section-title">Research & Data</h2>
+        <h2 class="section-title fade-in">Research & Data</h2>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Orphée de Bouard</div>
                 <div class="member-role">Blockchain Research Lead</div>
@@ -184,7 +390,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Jelmer Bos</div>
                 <div class="member-role">Data & AI Lead</div>
@@ -194,7 +400,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Lucas Kooijman</div>
                 <div class="member-role">Data Analyst</div>
@@ -204,7 +410,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Joseph Goldfinch</div>
                 <div class="member-role">Data Analyst</div>
@@ -214,9 +420,9 @@
             </div>
         </div>
 
-        <h2 class="section-title">Business Development & Investor Relations</h2>
+        <h2 class="section-title fade-in">Business Development & Investor Relations</h2>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Jeroen M. Tielman</div>
                 <div class="member-role">Head of Institutional Relations</div>
@@ -226,7 +432,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Robbie Whitlock</div>
                 <div class="member-role">VP of Fundraising & BD</div>
@@ -236,7 +442,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Valerie Reinhold</div>
                 <div class="member-role">Head of Investor Relations</div>
@@ -246,9 +452,9 @@
             </div>
         </div>
 
-        <h2 class="section-title">Operations</h2>
+        <h2 class="section-title fade-in">Operations</h2>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Fokko Hoeksma</div>
                 <div class="member-role">Head of Hedgefunds Operations</div>
@@ -258,7 +464,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Ters van der Merwe</div>
                 <div class="member-role">Senior Financial Controller</div>
@@ -268,7 +474,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Joël Paarwater</div>
                 <div class="member-role">CDD Analyst</div>
@@ -278,9 +484,9 @@
             </div>
         </div>
 
-        <h2 class="section-title">Communications & Marketing</h2>
+        <h2 class="section-title fade-in">Communications & Marketing</h2>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Olga Vazquez</div>
                 <div class="member-role">Head of Thought Leadership</div>
@@ -291,7 +497,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Bas van Honk</div>
                 <div class="member-role">Marketing & Design Lead</div>
@@ -301,9 +507,9 @@
             </div>
         </div>
 
-        <h2 class="section-title">Supervisory Board & Advisors</h2>
+        <h2 class="section-title fade-in">Supervisory Board & Advisors</h2>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Tijo van Marle</div>
                 <div class="member-role">Supervisory Board · Founder</div>
@@ -313,7 +519,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Rob van den Bergh</div>
                 <div class="member-role">Supervisory Board · Ex-CEO VNU</div>
@@ -323,7 +529,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Erik Westerink</div>
                 <div class="member-role">Supervisory Board · Ex-CEO Parcom</div>
@@ -334,7 +540,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Volkert Doeksen</div>
                 <div class="member-role">TBV Advisor · Co-Founder AlpInvest</div>
@@ -345,7 +551,7 @@
             </div>
         </div>
 
-        <div class="member">
+        <div class="member fade-in">
             <div class="member-info">
                 <div class="member-name">Rolly van Rappard</div>
                 <div class="member-role">Advisor & Shareholder · Co-Founder CVC Capital</div>
@@ -356,8 +562,24 @@
             </div>
         </div>
     </main>
+
     <footer>
         &copy; 2026 Theta Capital Management B.V. &middot; Concertgebouwplein 19, Amsterdam
     </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
