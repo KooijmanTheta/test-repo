@@ -531,7 +531,6 @@
             utterance.rate = 1.05;
             utterance.pitch = 0.95;
 
-            // Try to find a good voice
             const voices = synth.getVoices();
             const preferred = voices.find(v => v.name.includes('Google UK English Male'))
                 || voices.find(v => v.name.includes('Daniel'))
@@ -551,83 +550,79 @@
             synth.speak(utterance);
         }
 
-        // ===== JARVIS BRAIN (local responses) =====
-        function getJarvisResponse(input) {
+        // ===== WEBSOCKET CONNECTION =====
+        let ws = null;
+        let wsConnected = false;
+        const WS_URL = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+            ? 'ws://localhost:3033/ws'
+            : `wss://${location.hostname}/ws`;
+
+        function connectWS() {
+            try {
+                ws = new WebSocket(WS_URL);
+                ws.onopen = () => {
+                    wsConnected = true;
+                    document.querySelector('.header-right').innerHTML =
+                        '<span class="status-dot"></span>LUCAS\'S CLAUDE GOD — CONNECTED';
+                    console.log('[JARVIS] WebSocket connected');
+                };
+                ws.onmessage = (event) => {
+                    try {
+                        const msg = JSON.parse(event.data);
+                        if (msg.type === 'response') {
+                            addTranscript('jarvis', msg.text);
+                            speak(msg.text);
+                            statusEl.textContent = 'Speaking...';
+                        }
+                    } catch {}
+                };
+                ws.onclose = () => {
+                    wsConnected = false;
+                    document.querySelector('.header-right').innerHTML =
+                        '<span class="status-dot" style="background:#f59e0b"></span>LUCAS\'S CLAUDE GOD — LOCAL MODE';
+                    setTimeout(connectWS, 5000);
+                };
+                ws.onerror = () => { wsConnected = false; };
+            } catch { wsConnected = false; }
+        }
+        connectWS();
+
+        // ===== LOCAL FALLBACK BRAIN =====
+        function getLocalResponse(input) {
             const q = input.toLowerCase();
-
-            // Identity
-            if (q.includes('who are you') || q.includes('what are you')) {
-                return "I'm Lucas's Claude God. Your always-on AI assistant, running on a DigitalOcean droplet. Think of me as your personal Jarvis — I code, deploy, research, and remember things for you.";
-            }
-            if (q.includes('who am i') || q.includes('who is lucas')) {
-                return "You're Lucas Kooijman. Filipino-Dutch, based in Amsterdam. Data Analyst at Theta Capital Management. You're studying for the CAIA and planning a Master's starting September 2026. Action-oriented, no-fluff kind of guy.";
-            }
-            if (q.includes('girlfriend') || q.includes('luna')) {
-                return "Luna van Impe. She's an Associate at Bain and Company. You're a lucky man, Lucas.";
-            }
-
-            // Team
-            if (q.includes('who do i work with') || q.includes('colleagues') || q.includes('team')) {
-                return "Your managers are Jelmer Bos, Data and AI Lead, and Leopoldo Ochoa, Portfolio Manager. You work closely with Orphée de Bouard on blockchain research, Joseph Goldfinch as fellow data analyst, and Philipp Essle in investment. The managing partners are Ruud Smets, John van Marle, and Marc de Kloe.";
-            }
-            if (q.includes('ruud')) return "Ruud Smets, Managing Partner and CIO. Joined Theta in 2005. Two Master's degrees, CAIA certified. Deployed over 650 million into blockchain venture strategy.";
-            if (q.includes('jelmer')) return "Jelmer Bos, your manager. Data and AI Lead at Theta Capital.";
-            if (q.includes('philipp')) return "Philipp Essle, Investment Associate. Also the target of your prank button in the asset registry.";
-
-            // Company
-            if (q.includes('theta capital') || q.includes('the company')) {
-                return "Theta Capital Management. Founded 2001 in Amsterdam. AIFMD licensed blockchain investment manager with 1.5 billion plus in AUM. They run the Theta Blockchain Ventures fund-of-funds program with 6 vintages and over 50 crypto-native venture funds.";
-            }
-
-            // Meetings
-            if (q.includes('meeting') || q.includes('calendar') || q.includes('schedule')) {
-                return "You have the AI meeting every Friday at 3 PM. That's all I have on file.";
-            }
-
-            // Time
-            if (q.includes('time') || q.includes('what time')) {
-                return "It's " + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + ". You should probably be sleeping, Lucas.";
-            }
-            if (q.includes('date') || q.includes('what day')) {
-                return "It's " + new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ".";
-            }
-
-            // Greetings
-            if (q.match(/^(hi|hey|hello|yo|sup|what'?s up)/)) {
-                const greetings = [
-                    "Hey Lucas. What can I do for you?",
-                    "What's up? Ready when you are.",
-                    "Hey. What do you need?",
-                    "At your service. What's the task?"
-                ];
-                return greetings[Math.floor(Math.random() * greetings.length)];
-            }
-
-            // Sleep
-            if (q.includes('good night') || q.includes('going to sleep') || q.includes('sleep')) {
-                return "Good night, Lucas. I'll be here when you wake up. Rest well.";
-            }
-
-            // Fallback
-            const fallbacks = [
-                "I heard you, but I'm running in offline mode right now — no API connection. For complex questions, message me on Telegram where I have full brain access.",
-                "That's beyond my local knowledge. Hit me up on Telegram for the full Jarvis experience — I can search, code, and access the brain there.",
-                "I'm in standalone mode right now. I can answer questions about you, Theta, and the team, but for anything else, Telegram is where the magic happens."
-            ];
-            return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            if (q.includes('who are you') || q.includes('what are you'))
+                return "I'm Lucas's Claude God. Your always-on AI assistant on a DigitalOcean droplet.";
+            if (q.includes('who am i'))
+                return "You're Lucas Kooijman. Filipino-Dutch, Amsterdam. Data Analyst at Theta Capital.";
+            if (q.includes('girlfriend') || q.includes('luna'))
+                return "Luna van Impe. Associate at Bain & Company.";
+            if (q.includes('team') || q.includes('colleagues'))
+                return "Jelmer Bos and Leo Ochoa are your managers. Orphée, Joseph, and Philipp are on your team.";
+            if (q.includes('theta'))
+                return "Theta Capital Management. Amsterdam. 1.5 billion AUM. Blockchain venture capital fund of funds.";
+            if (q.includes('meeting'))
+                return "AI meeting every Friday at 3 PM.";
+            if (q.match(/^(hi|hey|hello|yo|sup)/))
+                return "Hey Lucas. What do you need?";
+            if (q.includes('good night') || q.includes('sleep'))
+                return "Good night, Lucas. I'll keep watch.";
+            return "I'm in local mode — the droplet server isn't connected. For full brain access, message me on Telegram.";
         }
 
         function handleInput(text) {
             addTranscript('user', text);
             statusEl.textContent = 'Processing...';
 
-            // Simulate brief thinking delay
-            setTimeout(() => {
-                const response = getJarvisResponse(text);
-                addTranscript('jarvis', response);
-                speak(response);
-                statusEl.textContent = 'Speaking...';
-            }, 400);
+            if (wsConnected && ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ type: 'query', text: text, source: 'voice' }));
+            } else {
+                setTimeout(() => {
+                    const response = getLocalResponse(text);
+                    addTranscript('jarvis', response);
+                    speak(response);
+                    statusEl.textContent = 'Speaking...';
+                }, 100);
+            }
         }
 
         // Load voices
