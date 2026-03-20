@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Theta Capital — Team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -11,62 +12,88 @@
             background: #000;
             color: #fff;
             min-height: 100vh;
+            line-height: 1.6;
         }
         header {
-            padding: 2rem 2rem 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         header h1 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
         }
         header p {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.85rem;
-            margin-top: 0.3rem;
-        }
-        main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
-        .section-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
             color: rgba(255,255,255,0.4);
-            margin-bottom: 1rem;
-            margin-top: 2.5rem;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+        header .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 1.5rem;
+            font-weight: 400;
+        }
+        main { padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 1.5rem;
+            margin-top: 4rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .section-title:first-child { margin-top: 0; }
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px;
-            overflow: hidden;
-        }
         .member {
-            background: #000;
-            padding: 1.2rem 1.4rem;
-            transition: background 0.2s;
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 2rem;
+            align-items: start;
         }
-        .member:hover { background: rgba(255,255,255,0.04); }
+        .member:last-child { border-bottom: none; }
+        .member-info { }
         .member-name {
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }
         .member-role {
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.5);
-            margin-top: 0.2rem;
+            color: rgba(255,255,255,0.45);
+            margin-top: 0.3rem;
+            font-weight: 400;
+        }
+        .member-bio {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        .member-details {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
         }
         footer {
-            padding: 2rem;
+            padding: 3rem 2rem;
             text-align: center;
-            color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.2);
             font-size: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
             margin-top: 2rem;
+        }
+        @media (max-width: 700px) {
+            .member {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            header h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -74,130 +101,263 @@
     <header>
         <h1>Theta Capital</h1>
         <p>Making blockchain investable since 2017</p>
+        <div class="subtitle">Our Team</div>
     </header>
     <main>
         <h2 class="section-title">Managing Partners</h2>
-        <div class="team-grid">
-            <div class="member">
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Ruud Smets</div>
                 <div class="member-role">Managing Partner & CIO</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Joined Theta in 2005 and has positioned the firm as a pioneering AIFMD-licensed fund manager. Under his leadership, Theta has deployed $650M+ into early-stage blockchain strategy across 45+ specialized managers since 2018, securing early exposure to 80% of successful blockchain projects.
+                <div class="member-details">MSc Information Technology · MSc Investment Theory · CAIA</div>
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">John van Marle</div>
                 <div class="member-role">Managing Partner</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Responsible for Marketing and Origination, joining Theta in 2021. Previously spent 19 years in London — starting on the European Equities desk at Cazenove, then moving to JP Morgan after its acquisition in 2010. Became Head of Block Trading at JP Morgan, managing ECM risk and distribution across all European ECM products.
+                <div class="member-details">Master of Law · VU University Amsterdam</div>
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Marc de Kloe</div>
                 <div class="member-role">Managing Partner</div>
+            </div>
+            <div class="member-bio">
+                Joined Theta in 2018 with an extensive investment background across alternatives. Former Head of Alternatives and Funds for ABN AMRO Private Banking, and more recently COO of Adamas Asset Management, a private credit manager based in Hong Kong. Deep expertise in hedge funds, private credit, and private equity.
             </div>
         </div>
 
         <h2 class="section-title">Investment & Portfolio</h2>
-        <div class="team-grid">
-            <div class="member">
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Leopoldo Ochoa</div>
                 <div class="member-role">Portfolio Manager</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Portfolio Manager at Theta Capital with prior experience at BESTSELLER and BAT.
+                <div class="member-details">MEng Engineering & Policy Analysis · TU Delft</div>
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Thijs de Jongh</div>
                 <div class="member-role">Portfolio Manager</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Portfolio Manager focused on financial markets, investment research, and data-driven portfolio management. Previously at Anthos Fund & Asset Management and FBSB.
+                <div class="member-details">MSc Econometrics · Universiteit van Amsterdam · CAIA</div>
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Philipp Essle</div>
                 <div class="member-role">Investment Associate</div>
+            </div>
+            <div class="member-bio">
+                Investment Associate supporting the portfolio team in blockchain venture capital fund analysis and selection.
             </div>
         </div>
 
         <h2 class="section-title">Research & Data</h2>
-        <div class="team-grid">
-            <div class="member">
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Orphée de Bouard</div>
                 <div class="member-role">Blockchain Research Lead</div>
             </div>
-            <div class="member">
-                <div class="member-name">Jelmer Bos</div>
-                <div class="member-role">Data & AI Lead</div>
-            </div>
-            <div class="member">
-                <div class="member-name">Lucas Kooijman</div>
-                <div class="member-role">Data Analyst</div>
-            </div>
-            <div class="member">
-                <div class="member-name">Joseph Goldfinch</div>
-                <div class="member-role">Data Analyst</div>
+            <div class="member-bio">
+                Leads blockchain research at Theta Capital, contributing to the firm's Satellite View framework and industry analysis across the blockchain stack.
             </div>
         </div>
 
-        <h2 class="section-title">Business Development & IR</h2>
-        <div class="team-grid">
-            <div class="member">
+        <div class="member">
+            <div class="member-info">
+                <div class="member-name">Jelmer Bos</div>
+                <div class="member-role">Data & AI Lead</div>
+            </div>
+            <div class="member-bio">
+                Leads data infrastructure and AI initiatives at Theta Capital, driving data-driven insights across the firm's investment operations.
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
+                <div class="member-name">Lucas Kooijman</div>
+                <div class="member-role">Data Analyst</div>
+            </div>
+            <div class="member-bio">
+                Data Analyst supporting the research and data team with analytics and tooling across Theta's blockchain venture portfolio.
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
+                <div class="member-name">Joseph Goldfinch</div>
+                <div class="member-role">Data Analyst</div>
+            </div>
+            <div class="member-bio">
+                Data Analyst working alongside the research and data team on portfolio analytics and reporting.
+            </div>
+        </div>
+
+        <h2 class="section-title">Business Development & Investor Relations</h2>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Jeroen M. Tielman</div>
                 <div class="member-role">Head of Institutional Relations</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Joined Theta in January 2025 with over 35 years of experience in alternative asset management. Former Founder and CEO of IMQubator and FundPartners, and spent 14 years at ABN AMRO including as Global Head of Product Development. Has known Theta CIO Ruud Smets since hiring him at FundPartners in 2001.
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Robbie Whitlock</div>
                 <div class="member-role">VP of Fundraising & BD</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Focused on raising funds to support innovative blockchain protocols and companies. Previously Associate in Capital Raising & Business Development at Climate Fund Managers (2022–2025).
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Valerie Reinhold</div>
                 <div class="member-role">Head of Investor Relations</div>
+            </div>
+            <div class="member-bio">
+                Manages investor communications and relations for Theta Capital's fund programs and institutional client base.
             </div>
         </div>
 
         <h2 class="section-title">Operations</h2>
-        <div class="team-grid">
-            <div class="member">
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Fokko Hoeksma</div>
                 <div class="member-role">Head of Hedgefunds Operations</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Oversees hedge fund operations across Theta Capital's alternative investment programs.
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Ters van der Merwe</div>
                 <div class="member-role">Senior Financial Controller</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Manages financial control and reporting for Theta Capital's fund structures and corporate operations.
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Joël Paarwater</div>
                 <div class="member-role">CDD Analyst</div>
+            </div>
+            <div class="member-bio">
+                Handles customer due diligence and compliance processes for Theta Capital's investor onboarding.
             </div>
         </div>
 
         <h2 class="section-title">Communications & Marketing</h2>
-        <div class="team-grid">
-            <div class="member">
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Olga Vazquez</div>
                 <div class="member-role">Head of Thought Leadership</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Leads strategy, insight, and research output on blockchain at Theta Capital. Contributes to the firm's publications and the annual Satellite View report.
+                <div class="member-details">Master of Architecture, Urban Planning & Design · Harvard GSD</div>
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Bas van Honk</div>
                 <div class="member-role">Marketing & Design Lead</div>
+            </div>
+            <div class="member-bio">
+                Leads marketing and design across Theta Capital's brand, publications, and digital presence.
             </div>
         </div>
 
         <h2 class="section-title">Supervisory Board & Advisors</h2>
-        <div class="team-grid">
-            <div class="member">
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Tijo van Marle</div>
-                <div class="member-role">Supervisory Board · Founder Theta</div>
+                <div class="member-role">Supervisory Board · Founder</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Founded Theta Capital Management in 2001, welcoming first investors on September 1, 2001 with an initial capital base of ~EUR 20M from friends and family. Built the firm from an independent hedge fund specialist into one of Europe's largest blockchain venture capital investors.
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Rob van den Bergh</div>
                 <div class="member-role">Supervisory Board · Ex-CEO VNU</div>
             </div>
-            <div class="member">
+            <div class="member-bio">
+                Veteran media executive who transformed VNU from a classical publisher into an international information and media concern. Career spanning publisher of Intermediair, director of VNU Business Publications, and chairman of VNU Magazine Group before becoming CEO in 2000. Later served on Ahold Supervisory Board.
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Erik Westerink</div>
                 <div class="member-role">Supervisory Board · Ex-CEO Parcom</div>
             </div>
-            <div class="member">
-                <div class="member-name">Volkert Doeksen</div>
-                <div class="member-role">TBV Advisor · Co-Founder Alpinvest</div>
+            <div class="member-bio">
+                Managing Partner at Parcom Capital (2006–2017). Previously CEO of Philips Lighting Electronics and Head of Corporate M&A at Royal Philips, before which he was Co-Head of the European Financial Institutions Group at Morgan Stanley.
+                <div class="member-details">MSc Dutch Civil & Commercial Law · Leiden University · MBA · INSEAD</div>
             </div>
-            <div class="member">
+        </div>
+
+        <div class="member">
+            <div class="member-info">
+                <div class="member-name">Volkert Doeksen</div>
+                <div class="member-role">TBV Advisor · Co-Founder AlpInvest</div>
+            </div>
+            <div class="member-bio">
+                Co-founded AlpInvest Partners in 1999, growing it into one of the world's largest private equity investment managers with €40B+ AUM. Previously managed $3B+ in private equity at Dresdner Kleinwort Benson. Started career at Morgan Stanley in London (1987).
+                <div class="member-details">LL.M. · Leiden Law School</div>
+            </div>
+        </div>
+
+        <div class="member">
+            <div class="member-info">
                 <div class="member-name">Rolly van Rappard</div>
                 <div class="member-role">Advisor & Shareholder · Co-Founder CVC Capital</div>
+            </div>
+            <div class="member-bio">
+                Co-founded CVC Capital Partners in 1993 when it spun off from Citicorp Venture Capital. Served as Managing Partner for nearly 15 years before becoming Co-Chairman in 2013. CVC became one of the world's largest private equity firms, IPO'ing on Euronext Amsterdam in 2024.
+                <div class="member-details">MA Economics · Columbia University · LL.M. · Utrecht University</div>
             </div>
         </div>
     </main>
     <footer>
-        &copy; 2026 Theta Capital Management B.V. &middot; Amsterdam
+        &copy; 2026 Theta Capital Management B.V. &middot; Concertgebouwplein 19, Amsterdam
     </footer>
 </body>
 </html>
