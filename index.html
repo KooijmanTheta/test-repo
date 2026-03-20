@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS — Lucas's Claude God</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --cyan: #00e5ff;
+            --cyan-dim: rgba(0, 229, 255, 0.15);
+            --cyan-glow: rgba(0, 229, 255, 0.4);
+            --bg: #050510;
+            --surface: rgba(0, 229, 255, 0.04);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #fff;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Background grid */
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Radial glow */
+        .glow {
+            position: fixed;
+            width: 800px; height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.06) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.5s;
+        }
+        .glow.active {
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.12) 0%, transparent 70%);
+        }
+
+        .app {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+        .header-left {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--cyan);
+            opacity: 0.5;
+            letter-spacing: 0.15em;
+        }
+        .header-right {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.2);
+        }
+        .status-dot {
+            display: inline-block;
+            width: 6px; height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
+        }
+
+        /* Core orb */
+        .orb-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 3rem;
+        }
+
+        .orb {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%,
+                rgba(0, 229, 255, 0.3) 0%,
+                rgba(0, 229, 255, 0.1) 40%,
+                rgba(0, 229, 255, 0.05) 60%,
+                transparent 70%);
+            box-shadow: 0 0 60px rgba(0, 229, 255, 0.15), inset 0 0 40px rgba(0, 229, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .orb.listening {
+            width: 140px; height: 140px;
+            box-shadow: 0 0 80px rgba(0, 229, 255, 0.3), inset 0 0 50px rgba(0, 229, 255, 0.15);
+        }
+        .orb.speaking {
+            box-shadow: 0 0 100px rgba(0, 229, 255, 0.4), inset 0 0 60px rgba(0, 229, 255, 0.2);
+        }
+
+        .ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            transition: all 0.5s;
+        }
+        .ring-1 { width: 160px; height: 160px; animation: spin 20s linear infinite; }
+        .ring-2 { width: 190px; height: 190px; animation: spin 30s linear infinite reverse; border-style: dashed; }
+        .ring-3 { width: 210px; height: 210px; animation: spin 25s linear infinite; border-style: dotted; opacity: 0.5; }
+
+        .listening .ring { border-color: rgba(0, 229, 255, 0.4); }
+
+        @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        /* Waveform */
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            height: 40px;
+            margin-bottom: 1rem;
+        }
+        .wave-bar {
+            width: 3px;
+            background: var(--cyan);
+            border-radius: 2px;
+            transition: height 0.1s ease;
+            opacity: 0.6;
+        }
+
+        /* Status text */
+        .status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 2rem;
+            opacity: 0.6;
+            min-height: 1.2em;
+        }
+
+        /* Transcript */
+        .transcript-container {
+            width: 100%;
+            max-width: 600px;
+            max-height: 200px;
+            overflow-y: auto;
+            scrollbar-width: none;
+            margin-bottom: 2rem;
+        }
+        .transcript-container::-webkit-scrollbar { display: none; }
+
+        .transcript-line {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.04);
+            animation: fadeIn 0.3s ease;
+            display: flex;
+            gap: 0.75rem;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .transcript-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+        .transcript-label.user { color: rgba(255,255,255,0.3); }
+        .transcript-label.jarvis { color: var(--cyan); opacity: 0.6; }
+        .transcript-text {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .transcript-text.jarvis-text { color: rgba(0, 229, 255, 0.8); }
+
+        /* Button */
+        .mic-btn {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            background: rgba(0, 229, 255, 0.05);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .mic-btn:hover {
+            border-color: rgba(0, 229, 255, 0.4);
+            background: rgba(0, 229, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.1);
+        }
+        .mic-btn.active {
+            border-color: var(--cyan);
+            background: rgba(0, 229, 255, 0.15);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.2);
+        }
+        .mic-btn.active::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            animation: ping 1.5s ease-out infinite;
+        }
+        @keyframes ping {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+        .mic-icon {
+            width: 20px; height: 20px;
+            fill: none;
+            stroke: var(--cyan);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .hint {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.15);
+            letter-spacing: 0.05em;
+        }
+
+        /* Text input fallback */
+        .text-input-row {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 1.5rem;
+        }
+        .text-input {
+            flex: 1;
+            background: rgba(0, 229, 255, 0.04);
+            border: 1px solid rgba(0, 229, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .text-input::placeholder { color: rgba(255,255,255,0.15); }
+        .text-input:focus { border-color: rgba(0, 229, 255, 0.3); }
+        .send-btn {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.7rem 1.2rem;
+            color: var(--cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .send-btn:hover {
+            background: rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem;
+            color: rgba(255,255,255,0.1);
+            letter-spacing: 0.1em;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .orb-container { width: 180px; height: 180px; }
+            .orb { width: 90px; height: 90px; }
+            .ring-1 { width: 120px; height: 120px; }
+            .ring-2 { width: 145px; height: 145px; }
+            .ring-3 { width: 170px; height: 170px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow" id="glow"></div>
+
+    <div class="header">
+        <div class="header-left">JARVIS v1.0</div>
+        <div class="header-right"><span class="status-dot"></span>LUCAS'S CLAUDE GOD — ONLINE</div>
+    </div>
+
+    <div class="app">
+        <div class="orb-container" id="orbContainer">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+            <div class="orb" id="orb"></div>
+        </div>
+
+        <div class="waveform" id="waveform"></div>
+
+        <div class="status" id="status">Ready</div>
+
+        <div class="transcript-container" id="transcript"></div>
+
+        <div class="controls">
+            <button class="mic-btn" id="micBtn" title="Hold to speak">
+                <svg class="mic-icon" viewBox="0 0 24 24">
+                    <rect x="9" y="2" width="6" height="12" rx="3"/>
+                    <path d="M5 10a7 7 0 0 0 14 0"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                </svg>
+            </button>
+            <span class="hint">click to speak · type below</span>
+        </div>
+
+        <div class="text-input-row">
+            <input type="text" class="text-input" id="textInput" placeholder="Or type a message..." autocomplete="off">
+            <button class="send-btn" id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span>THETA CAPITAL · DROPLET</span>
+        <span id="clock"></span>
+    </div>
+
+    <script>
+        // ===== WAVEFORM =====
+        const waveformEl = document.getElementById('waveform');
+        const NUM_BARS = 24;
+        const bars = [];
+        for (let i = 0; i < NUM_BARS; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'wave-bar';
+            bar.style.height = '4px';
+            waveformEl.appendChild(bar);
+            bars.push(bar);
+        }
+
+        let waveActive = false;
+        function animateWave() {
+            bars.forEach((bar, i) => {
+                const h = waveActive
+                    ? 4 + Math.sin(Date.now() / 150 + i * 0.5) * 16 + Math.random() * 8
+                    : 4;
+                bar.style.height = h + 'px';
+                bar.style.opacity = waveActive ? 0.7 : 0.2;
+            });
+            requestAnimationFrame(animateWave);
+        }
+        animateWave();
+
+        // ===== CLOCK =====
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').textContent =
+                now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) +
+                ' · ' + now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // ===== SPEECH =====
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const synth = window.speechSynthesis;
+        let recognition = null;
+        let isListening = false;
+
+        const orb = document.getElementById('orb');
+        const orbContainer = document.getElementById('orbContainer');
+        const glow = document.getElementById('glow');
+        const micBtn = document.getElementById('micBtn');
+        const statusEl = document.getElementById('status');
+        const transcript = document.getElementById('transcript');
+        const textInput = document.getElementById('textInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onresult = (event) => {
+                let finalText = '';
+                let interimText = '';
+                for (let i = 0; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) {
+                        finalText += event.results[i][0].transcript;
+                    } else {
+                        interimText += event.results[i][0].transcript;
+                    }
+                }
+                if (interimText) {
+                    statusEl.textContent = interimText;
+                }
+                if (finalText) {
+                    stopListening();
+                    handleInput(finalText.trim());
+                }
+            };
+
+            recognition.onerror = (e) => {
+                console.error('Speech error:', e.error);
+                stopListening();
+                if (e.error !== 'aborted') {
+                    statusEl.textContent = 'Error: ' + e.error;
+                }
+            };
+
+            recognition.onend = () => {
+                if (isListening) stopListening();
+            };
+        }
+
+        function startListening() {
+            if (!recognition) {
+                statusEl.textContent = 'Speech not supported — use text input';
+                return;
+            }
+            isListening = true;
+            waveActive = true;
+            recognition.start();
+            orb.classList.add('listening');
+            micBtn.classList.add('active');
+            glow.classList.add('active');
+            statusEl.textContent = 'Listening...';
+        }
+
+        function stopListening() {
+            isListening = false;
+            waveActive = false;
+            if (recognition) recognition.stop();
+            orb.classList.remove('listening');
+            micBtn.classList.remove('active');
+            glow.classList.remove('active');
+        }
+
+        micBtn.addEventListener('click', () => {
+            if (isListening) {
+                stopListening();
+                statusEl.textContent = 'Ready';
+            } else {
+                startListening();
+            }
+        });
+
+        // ===== TEXT INPUT =====
+        textInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && textInput.value.trim()) {
+                handleInput(textInput.value.trim());
+                textInput.value = '';
+            }
+        });
+        sendBtn.addEventListener('click', () => {
+            if (textInput.value.trim()) {
+                handleInput(textInput.value.trim());
+                textInput.value = '';
+            }
+        });
+
+        // ===== CONVERSATION =====
+        const messages = [];
+
+        function addTranscript(role, text) {
+            const line = document.createElement('div');
+            line.className = 'transcript-line';
+            line.innerHTML = `
+                <span class="transcript-label ${role}">${role === 'user' ? 'You' : 'Jarvis'}</span>
+                <span class="transcript-text ${role === 'jarvis' ? 'jarvis-text' : ''}">${text}</span>
+            `;
+            transcript.appendChild(line);
+            transcript.scrollTop = transcript.scrollHeight;
+        }
+
+        function speak(text) {
+            if (!synth) return;
+            synth.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1.05;
+            utterance.pitch = 0.95;
+
+            // Try to find a good voice
+            const voices = synth.getVoices();
+            const preferred = voices.find(v => v.name.includes('Google UK English Male'))
+                || voices.find(v => v.name.includes('Daniel'))
+                || voices.find(v => v.lang === 'en-GB' && v.name.includes('Male'))
+                || voices.find(v => v.lang.startsWith('en'));
+            if (preferred) utterance.voice = preferred;
+
+            orb.classList.add('speaking');
+            waveActive = true;
+
+            utterance.onend = () => {
+                orb.classList.remove('speaking');
+                waveActive = false;
+                statusEl.textContent = 'Ready';
+            };
+
+            synth.speak(utterance);
+        }
+
+        // ===== JARVIS BRAIN (local responses) =====
+        function getJarvisResponse(input) {
+            const q = input.toLowerCase();
+
+            // Identity
+            if (q.includes('who are you') || q.includes('what are you')) {
+                return "I'm Lucas's Claude God. Your always-on AI assistant, running on a DigitalOcean droplet. Think of me as your personal Jarvis — I code, deploy, research, and remember things for you.";
+            }
+            if (q.includes('who am i') || q.includes('who is lucas')) {
+                return "You're Lucas Kooijman. Filipino-Dutch, based in Amsterdam. Data Analyst at Theta Capital Management. You're studying for the CAIA and planning a Master's starting September 2026. Action-oriented, no-fluff kind of guy.";
+            }
+            if (q.includes('girlfriend') || q.includes('luna')) {
+                return "Luna van Impe. She's an Associate at Bain and Company. You're a lucky man, Lucas.";
+            }
+
+            // Team
+            if (q.includes('who do i work with') || q.includes('colleagues') || q.includes('team')) {
+                return "Your managers are Jelmer Bos, Data and AI Lead, and Leopoldo Ochoa, Portfolio Manager. You work closely with Orphée de Bouard on blockchain research, Joseph Goldfinch as fellow data analyst, and Philipp Essle in investment. The managing partners are Ruud Smets, John van Marle, and Marc de Kloe.";
+            }
+            if (q.includes('ruud')) return "Ruud Smets, Managing Partner and CIO. Joined Theta in 2005. Two Master's degrees, CAIA certified. Deployed over 650 million into blockchain venture strategy.";
+            if (q.includes('jelmer')) return "Jelmer Bos, your manager. Data and AI Lead at Theta Capital.";
+            if (q.includes('philipp')) return "Philipp Essle, Investment Associate. Also the target of your prank button in the asset registry.";
+
+            // Company
+            if (q.includes('theta capital') || q.includes('the company')) {
+                return "Theta Capital Management. Founded 2001 in Amsterdam. AIFMD licensed blockchain investment manager with 1.5 billion plus in AUM. They run the Theta Blockchain Ventures fund-of-funds program with 6 vintages and over 50 crypto-native venture funds.";
+            }
+
+            // Meetings
+            if (q.includes('meeting') || q.includes('calendar') || q.includes('schedule')) {
+                return "You have the AI meeting every Friday at 3 PM. That's all I have on file.";
+            }
+
+            // Time
+            if (q.includes('time') || q.includes('what time')) {
+                return "It's " + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + ". You should probably be sleeping, Lucas.";
+            }
+            if (q.includes('date') || q.includes('what day')) {
+                return "It's " + new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ".";
+            }
+
+            // Greetings
+            if (q.match(/^(hi|hey|hello|yo|sup|what'?s up)/)) {
+                const greetings = [
+                    "Hey Lucas. What can I do for you?",
+                    "What's up? Ready when you are.",
+                    "Hey. What do you need?",
+                    "At your service. What's the task?"
+                ];
+                return greetings[Math.floor(Math.random() * greetings.length)];
+            }
+
+            // Sleep
+            if (q.includes('good night') || q.includes('going to sleep') || q.includes('sleep')) {
+                return "Good night, Lucas. I'll be here when you wake up. Rest well.";
+            }
+
+            // Fallback
+            const fallbacks = [
+                "I heard you, but I'm running in offline mode right now — no API connection. For complex questions, message me on Telegram where I have full brain access.",
+                "That's beyond my local knowledge. Hit me up on Telegram for the full Jarvis experience — I can search, code, and access the brain there.",
+                "I'm in standalone mode right now. I can answer questions about you, Theta, and the team, but for anything else, Telegram is where the magic happens."
+            ];
+            return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+        }
+
+        function handleInput(text) {
+            addTranscript('user', text);
+            statusEl.textContent = 'Processing...';
+
+            // Simulate brief thinking delay
+            setTimeout(() => {
+                const response = getJarvisResponse(text);
+                addTranscript('jarvis', response);
+                speak(response);
+                statusEl.textContent = 'Speaking...';
+            }, 400);
+        }
+
+        // Load voices
+        if (synth) {
+            synth.getVoices();
+            synth.onvoiceschanged = () => synth.getVoices();
+        }
+
+        // Keyboard shortcut: Space to toggle mic
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && document.activeElement !== textInput) {
+                e.preventDefault();
+                micBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
